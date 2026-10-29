@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Nuevo ticket · HelpDesk{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8"><div class="card shadow-sm"><div class="card-body p-4">
+<h1 class="h3">Registrar ticket</h1><p class="text-secondary">Describa claramente la solicitud o problema.</p>
+<form method="post" id="ticket-form">
+<div class="mb-3"><label class="form-label" for="title">Título</label><input class="form-control" id="title" name="title" maxlength="160" required></div>
+<div class="mb-3"><label class="form-label" for="type">Tipo de solicitud</label><select class="form-select" id="type" name="type" required><option value="">Seleccione...</option><option>Petición</option><option>Incidencia</option><option>Requerimiento</option></select>
+<div class="form-text">Petición: servicio; Incidencia: falla; Requerimiento: necesidad funcional o técnica.</div></div>
+<div class="mb-3"><label class="form-label" for="priority">Prioridad</label><select class="form-select" id="priority" name="priority" required><option value="">Seleccione...</option><option value="L1">L1 — Alta</option><option value="L2">L2 — Media</option><option value="L3">L3 — Baja</option></select></div>
+<div class="mb-3"><label class="form-label" for="description">Descripción</label><textarea class="form-control" id="description" name="description" rows="5" minlength="10" required></textarea><div class="form-text"><span id="description-count">0</span> caracteres; mínimo 10.</div></div>
+<button class="btn btn-primary">Registrar</button><a class="btn btn-outline-secondary" href="{{ url_for('tickets.Dashboard') }}">Cancelar</a>
+</form></div></div></div></div>
+{% endblock %}

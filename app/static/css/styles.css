@@ -1,0 +1,5 @@
+/* Estilos propios; Bootstrap aporta la cuadrícula responsive. */
+body { background: #f5f7fb; }
+.card { border: 0; border-radius: .85rem; }
+.table th { white-space: nowrap; }
+.navbar-brand { font-weight: 700; letter-spacing: .02em; }

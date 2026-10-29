@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}HelpDesk{% endblock %}</title>
+  <!-- Bootstrap 5 se carga desde CDN. -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark"><div class="container">
+  <a class="navbar-brand" href="{{ url_for('tickets.Dashboard') if current_user.is_authenticated else url_for('auth.Login') }}">HelpDesk</a>
+  {% if current_user.is_authenticated %}
+    <span class="navbar-text text-light me-3">{{ current_user.Name }} · {{ current_user.Role }}</span>
+    <form method="post" action="{{ url_for('auth.Logout') }}"><button class="btn btn-outline-light btn-sm">Cerrar sesión</button></form>
+  {% endif %}
+</div></nav>
+<main class="container py-4">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% for category, message in messages %}<div class="alert alert-{{ category }}">{{ message }}</div>{% endfor %}
+{% endwith %}
+{% block content %}{% endblock %}
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body></html>

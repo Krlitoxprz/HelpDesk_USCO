@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Gestionar ticket #{{ ticket.Id }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-8">
+<div class="card shadow-sm mb-4"><div class="card-body p-4"><h1 class="h3">Ticket #{{ ticket.Id }} — {{ ticket.Title }}</h1>
+<dl class="row mb-0"><dt class="col-sm-3">Cliente</dt><dd class="col-sm-9">{{ ticket.Client.Name }}</dd><dt class="col-sm-3">Tipo</dt><dd class="col-sm-9">{{ ticket.Type }}</dd><dt class="col-sm-3">Prioridad</dt><dd class="col-sm-9">{{ ticket.Priority }}</dd><dt class="col-sm-3">Estado</dt><dd class="col-sm-9">{{ ticket.Status }}</dd><dt class="col-sm-3">Descripción</dt><dd class="col-sm-9">{{ ticket.Description }}</dd>
+{% if ticket.Resolution %}<dt class="col-sm-3">Actuación anterior</dt><dd class="col-sm-9">{{ ticket.Resolution }}</dd>{% endif %}</dl></div></div>
+<div class="card shadow-sm"><div class="card-body p-4"><h2 class="h5">Registrar gestión</h2><form method="post">
+<div class="mb-3"><label class="form-label" for="status">Nuevo estado</label><select class="form-select" id="status" name="status" required>{% for status in ["Pendiente", "Atendido", "Rechazado"] %}<option value="{{ status }}" {% if ticket.Status == status %}selected{% endif %}>{{ status }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label" for="resolution">Descripción de lo realizado o motivo</label><textarea class="form-control" id="resolution" name="resolution" rows="4" minlength="10" required>{{ ticket.Resolution or "" }}</textarea></div>
+<button class="btn btn-primary">Guardar gestión</button><a class="btn btn-outline-secondary" href="{{ url_for('tickets.Dashboard') }}">Volver</a>
+</form></div></div></div></div>
+{% endblock %}

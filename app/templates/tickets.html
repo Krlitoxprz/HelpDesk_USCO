@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Tickets · HelpDesk{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3"><div><h1 class="h3">Tickets</h1>
+<p class="text-secondary">{% if current_user.Role == "Cliente" %}Mis solicitudes{% elif current_user.Role == "Administrador" %}Vista general{% else %}Tickets para gestionar{% endif %}</p></div>
+{% if current_user.Role == "Cliente" %}<a class="btn btn-primary" href="{{ url_for('tickets.Create') }}">Nuevo ticket</a>{% endif %}</div>
+<div class="table-responsive card shadow-sm"><table class="table table-hover align-middle mb-0">
+<thead class="table-light"><tr><th>ID</th><th>Título y descripción</th><th>Tipo</th><th>Prioridad</th><th>Estado</th><th>Cliente</th><th>Fecha</th>{% if current_user.Role == "Soporte" %}<th>Acción</th>{% endif %}</tr></thead>
+<tbody>{% for ticket in tickets %}<tr>
+<td>#{{ ticket.Id }}</td><td><strong>{{ ticket.Title }}</strong><div class="small text-secondary">{{ ticket.Description|truncate(80) }}</div></td><td>{{ ticket.Type }}</td>
+<td><span class="badge text-bg-{{ 'danger' if ticket.Priority == 'L1' else ('warning' if ticket.Priority == 'L2' else 'secondary') }}">{{ ticket.Priority }}</span></td>
+<td>{{ ticket.Status }}</td><td>{{ ticket.Client.Name }}</td><td>{{ ticket.CreatedAt.strftime("%Y-%m-%d %H:%M") }}</td>
+{% if current_user.Role == "Soporte" %}<td><a class="btn btn-sm btn-outline-primary" href="{{ url_for('support.ManageTicket', ticket_id=ticket.Id) }}">Gestionar</a></td>{% endif %}
+</tr>{% else %}<tr><td colspan="8" class="text-center p-4">No hay tickets registrados.</td></tr>{% endfor %}</tbody>
+</table></div>
+{% endblock %}
